@@ -5,6 +5,9 @@
 
     <string name="action_settings">Settings</string>
 
+    <!--Home Fragment-->
+    <string name="you_connect_string">You Connected to</string>
+
     <!--Drawer Navigation Strings-->
     <string name="drawer_open">Menu</string>
 

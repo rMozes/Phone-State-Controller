@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="silent_mode">#00ffff</color>
+    <color name="medium_mode">#FFA319</color>
+    <color name="full_mode">#00ff00</color>
+
+</resources>

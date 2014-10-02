@@ -1,6 +1,5 @@
 package net.brusd.phonecontroller.utils;
 
-import android.app.Activity;
 import android.content.Context;
 
 import net.brusd.phonecontroller.Constant;
@@ -11,7 +10,7 @@ import net.brusd.phonecontroller.Constant;
 public class SharedPreferences {
 
     public static final String PREFS_NAME = Constant.PROJECT_NAME + "StateSettings";
-    public static final String GLOBAL_VOLUME_MODE = Constant.PROJECT_NAME + "StateSettings";
+    public static final String GLOBAL_VOLUME_MODE = Constant.PROJECT_NAME + "GlobalMode";
 
     private static android.content.SharedPreferences settings;
     private static Context context = null;
@@ -22,8 +21,8 @@ public class SharedPreferences {
         return settingsTemp;
     }
 
-    public static int getVolumeValue(Activity activity, String prefName) {
-        settings = getSP(activity);
+    public static int getVolumeValue(Context context, String prefName) {
+        settings = getSP(context);
         return settings.getInt(Constant.PROJECT_NAME + prefName, 0);
     }
 
@@ -36,7 +35,7 @@ public class SharedPreferences {
         settings = getSP(context);
 
         android.content.SharedPreferences.Editor editor = settings.edit();
-        editor.putLong(GLOBAL_VOLUME_MODE, modeID);
+        editor.putInt(GLOBAL_VOLUME_MODE, modeID);
         // Commit the edits!
         editor.commit();
     }

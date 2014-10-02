@@ -11,12 +11,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.startad.lib.SADView;
 
-
+import net.brusd.phonecontroller.AppDataBase.AppDB;
+import net.brusd.phonecontroller.Constant;
 import net.brusd.phonecontroller.R;
+import net.brusd.phonecontroller.dialog.ChosenDialog;
 
 import java.util.Locale;
 
@@ -30,31 +34,64 @@ public class HomeFragment extends Fragment {
     private static final String APPLICAITON_ID = "542d3fc223a7211400000000";
     private String ssid = null;
 
+    private TextView wifiNameTextView;
+    private ImageView modeTypeImageView, editModeAssocieteImageView;
+    private static AppDB appDB = null;
+    private ChosenDialog chosenDialog;
+
+    private View.OnClickListener onClickListener =  new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showChosenDialog();
+
+        }
+    };
+
+    private void showChosenDialog() {
+        chosenDialog =  new ChosenDialog(parentActivity, ssid);
+        chosenDialog.setCancelable(false);
+        chosenDialog.show();
+
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         parentActivity = getActivity();
-
+        wifiNameTextView = (TextView) rootView.findViewById(R.id.current_connected_wifi_text_view);
+        modeTypeImageView = (ImageView) rootView.findViewById(R.id.mode_type_image_view);
+        editModeAssocieteImageView = (ImageView)rootView.findViewById(R.id.edit_mode_image_view);
 
         initAdView();
-        initNetworkData();
-
-
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initNetworkData();
+    }
 
-    private void initAdView(){
+    @Override
+    public void onDestroy() {
+        if (this.sadView != null) {
+            this.sadView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    private void initAdView() {
         sadView = new SADView(parentActivity, APPLICAITON_ID);
-        LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.sad_linear_layout);
+        LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.sad_linear_layout);
 
         // Add the adView to it
         layout.addView(sadView);
 
-        if(Locale.getDefault().getLanguage().equals("ru") ||Locale.getDefault().getLanguage().equals("ua")){
+        if (Locale.getDefault().getLanguage().equals("ru") || Locale.getDefault().getLanguage().equals("ua")) {
             this.sadView.loadAd(SADView.LANGUAGE_RU);
-        }else {
+        } else {
             this.sadView.loadAd(SADView.LANGUAGE_EN);
         }
     }
@@ -67,21 +104,33 @@ public class HomeFragment extends Fragment {
             final WifiManager wifiManager = (WifiManager) parentActivity.getSystemService(Context.WIFI_SERVICE);
             final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
             if (connectionInfo != null && !(connectionInfo.getSSID().equals(""))) {
-                //if (connectionInfo != null && !StringUtil.isBlank(connectionInfo.getSSID())) {
+                appDB = AppDB.getInstance(parentActivity);
                 ssid = connectionInfo.getSSID();
+                initModeTypeImageView(appDB.isWiFiRelatedToMode(ssid));
+                editModeAssocieteImageView.setOnClickListener(onClickListener);
             }
-        } else{
+        } else {
             ssid = parentActivity.getString(R.string.no_wifi_connection_string);
         }
-
-
+        wifiNameTextView.setText(ssid);
     }
 
-    @Override
-    public void onDestroy() {
-        if (this.sadView != null) {
-            this.sadView.destroy();
+    private void initModeTypeImageView(int modeID) {
+
+        switch (modeID) {
+            case Constant.MODE_FULL:
+                modeTypeImageView.setBackgroundColor(getResources().getColor(R.color.full_mode));
+                break;
+            case Constant.MODE_MEDIUM:
+                modeTypeImageView.setBackgroundColor(getResources().getColor(R.color.medium_mode));
+                break;
+            case Constant.MODE_SILENT:
+                modeTypeImageView.setBackgroundColor(getResources().getColor(R.color.silent_mode));
+                break;
+
         }
-        super.onDestroy();
+
+
     }
+
 }
