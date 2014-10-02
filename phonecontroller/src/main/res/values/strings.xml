@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Phone State Controller</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--Drawer Navigation Strings-->
+    <string name="drawer_open">Menu</string>
+
+    <string name="home_button_string">Home</string>
+    <string name="modes_button_string">Modes</string>
+    <string name="saved_wifi_button_string">Saved WiFi</string>
+    <string name="settings_button_string">Settings</string>
+    <string name="rate_us_string">Rate Us</string>
+    <string name="about_string">About</string>
+
+    <!--Saved WiFi-->
+    <string name="no_wifi_connection_string">
+        Sorry but to get this info you need turn ON your WiFi
+    </string>
+    <string name="associated_with_string">associated with:</string>
+
+    <!--Modes Name-->
+    <string name="full_volume_mode_string">Full Volume Mode</string>
+    <string name="medium_volume_mode_string">Medium Volume Mode</string>
+    <string name="silent_volume_mode_string">Silent Mode</string>
+
+
+
+</resources>

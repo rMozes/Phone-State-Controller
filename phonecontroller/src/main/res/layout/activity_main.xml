@@ -1,0 +1,58 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!-- The navigation drawer -->
+    <LinearLayout android:id="@+id/left_drawer"
+        android:orientation="vertical"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:layout_gravity="start"
+        android:background="#fff">
+
+        <Button
+            android:id="@+id/home_button"
+            style="@style/ButtonDrawerStyle"
+
+            android:text="@string/home_button_string"/>
+        <Button
+            android:id="@+id/modes_button"
+            style="@style/ButtonDrawerStyle"
+            android:text="@string/modes_button_string"/>
+        <Button
+            android:id="@+id/saved_wifi_button"
+            style="@style/ButtonDrawerStyle"
+            android:text="@string/saved_wifi_button_string"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/background_dark"/>
+        <Button
+            android:id="@+id/settings_button"
+            style="@style/ButtonDrawerStyle"
+            android:text="@string/settings_button_string"/>
+        <Button
+            android:id="@+id/rate_us_button"
+            style="@style/ButtonDrawerStyle"
+            android:text="@string/rate_us_string"/>
+        <Button
+            android:id="@+id/about_button"
+            style="@style/ButtonDrawerStyle"
+            android:text="@string/about_string"/>
+        <LinearLayout
+            android:id="@+id/empty_liner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+        </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
