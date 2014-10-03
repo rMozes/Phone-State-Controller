@@ -29,6 +29,9 @@
     <string name="medium_volume_mode_string">Medium Volume Mode</string>
     <string name="silent_volume_mode_string">Silent Mode</string>
 
+    <!--Dialog -->
+    <string name="yes_string">Yes</string>
+    <string name="no_string">No</string>
 
 
 </resources>

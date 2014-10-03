@@ -27,11 +27,13 @@ public class AppDB {
         }
         return instance;
     }
+
     private AppDB(Context context) {
         this.context = context;
         this.appOpenHelper = new AppOpenHelper(context);
         appDB = appOpenHelper.getWritableDatabase();
     }
+
     public void addWiFiModeRelation(int modeID, String wiFiName) {
         if (!appDB.isOpen())
             open();
@@ -49,32 +51,40 @@ public class AppDB {
 
         int count = check.getCount();
         check.close();
-
+        ContentValues values = new ContentValues();
+        values.put(AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id, modeID);
+        values.put(AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name, wiFiName);
         if (count == 0) {
-
-            ContentValues values = new ContentValues();
-            values.put(AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id, modeID);
-            values.put(AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name, wiFiName);
-
             appDB.insert(AppOpenHelper.TABLE_MODES_WIFI_RELATION, null, values);
+        } else {
+
+            appDB.update(AppOpenHelper.TABLE_MODES_WIFI_RELATION,
+                    values,
+                    AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name + " = '" + wiFiName + "'",
+                    null);
+
         }
+
     }
-    public int isWiFiRelatedToMode(String wifiName){
+
+    public int isWiFiRelatedToMode(String wifiName) {
         Cursor cursorAllWifi = null;
         int related;
+
+        wifiName = wifiName.replace("'", "''");
         if (!appDB.isOpen())
             open();
 
         cursorAllWifi = appDB.query(AppOpenHelper.TABLE_MODES_WIFI_RELATION,
-                new String[]{ AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id,  AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name},
-                AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name + " = "+wifiName ,
+                new String[]{AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id, AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name},
+                AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name + " =  '" + wifiName + "'",
                 null,
                 null,
                 null,
                 null);
-        if(cursorAllWifi.moveToFirst()){
+        if (cursorAllWifi.moveToFirst()) {
             related = cursorAllWifi.getInt(0);
-        }else {
+        } else {
             related = getDefoultModeID();
         }
 
@@ -85,14 +95,14 @@ public class AppDB {
         return SharedPreferences.getGlobalVolumeMode(context);
     }
 
-    public Cursor getAllWifiByModeID(int modeID){
+    public Cursor getAllWifiByModeID(int modeID) {
         Cursor cursorAllWifi = null;
         if (!appDB.isOpen())
             open();
 
         cursorAllWifi = appDB.query(AppOpenHelper.TABLE_MODES_WIFI_RELATION,
-                new String[]{AppOpenHelper.TABLE_MODES_WIFI_RELATION_id, AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id, AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name, },
-                AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id + " = "+modeID ,
+                new String[]{AppOpenHelper.TABLE_MODES_WIFI_RELATION_id, AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id, AppOpenHelper.TABLE_MODES_WIFI_RELATION_wifi_name,},
+                AppOpenHelper.TABLE_MODES_WIFI_RELATION_mode_id + " = " + modeID,
                 null,
                 null,
                 null,
@@ -102,11 +112,11 @@ public class AppDB {
     }
 
 
-    public void open(){
+    public void open() {
         appDB = appOpenHelper.getWritableDatabase();
     }
 
-    public void close(){
+    public void close() {
         appDB.close();
     }
 

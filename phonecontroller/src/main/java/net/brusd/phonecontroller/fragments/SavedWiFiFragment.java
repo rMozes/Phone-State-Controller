@@ -74,6 +74,8 @@ public class SavedWiFiFragment extends Fragment {
             networkSimpleAdapter = new NetworkSimpleAdapter(parentActivity, networkList, 0, null, null);
             listView.setAdapter(networkSimpleAdapter);
 
+
+
         }else {
             notificationTextView.setVisibility(View.VISIBLE);
             notificationTextView.setText(parentActivity.getString(R.string.no_wifi_connection_string));

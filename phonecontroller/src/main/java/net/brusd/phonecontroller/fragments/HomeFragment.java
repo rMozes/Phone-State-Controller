@@ -1,8 +1,10 @@
 package net.brusd.phonecontroller.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -50,6 +52,12 @@ public class HomeFragment extends Fragment {
     private void showChosenDialog() {
         chosenDialog =  new ChosenDialog(parentActivity, ssid);
         chosenDialog.setCancelable(false);
+        chosenDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                initModeTypeImageView(appDB.isWiFiRelatedToMode(ssid));
+            }
+        });
         chosenDialog.show();
 
     }

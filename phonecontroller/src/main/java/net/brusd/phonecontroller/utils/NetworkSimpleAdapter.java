@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import net.brusd.phonecontroller.Constant;
 import net.brusd.phonecontroller.R;
-
+import net.brusd.phonecontroller.dialog.ChosenDialog;
 
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class NetworkSimpleAdapter extends SimpleAdapter {
     private Activity parentActivity;
     private List<? extends Map<String, ?>> data;
     private String associatedString;
+    private ChosenDialog chosenDialog;
     /**
      * Constructor
      *
@@ -74,12 +75,15 @@ public class NetworkSimpleAdapter extends SimpleAdapter {
         switch (relatedMode){
             case Constant.MODE_FULL:
                 asociete += " "+ parentActivity.getString(R.string.full_volume_mode_string);
+                convertView.setBackgroundColor(parentActivity.getResources().getColor(R.color.full_mode));
                 break;
             case Constant.MODE_MEDIUM:
                 asociete += " "+ parentActivity.getString(R.string.medium_volume_mode_string);
+                convertView.setBackgroundColor(parentActivity.getResources().getColor(R.color.medium_mode));
                 break;
             case Constant.MODE_SILENT:
                 asociete += " "+ parentActivity.getString(R.string.silent_volume_mode_string);
+                convertView.setBackgroundColor(parentActivity.getResources().getColor(R.color.silent_mode));
                 break;
             default:
                 wifiAddRemoveImageButton.setImageDrawable(parentActivity.getResources().getDrawable(android.R.drawable.ic_menu_add));
